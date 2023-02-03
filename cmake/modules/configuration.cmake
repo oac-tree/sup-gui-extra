@@ -1,0 +1,38 @@
+# -----------------------------------------------------------------------------
+# Modules
+# -----------------------------------------------------------------------------
+
+include(CTest)
+include(GenerateExportHeader)
+include(GNUInstallDirs)
+
+# -----------------------------------------------------------------------------
+# Variables
+# -----------------------------------------------------------------------------
+
+get_filename_component(SUP_GUI_EXTRA_PROJECT_DIR "${CMAKE_CURRENT_LIST_DIR}/../.." ABSOLUTE)
+
+set(SUP_GUI_EXTRA_SOVERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR})
+set(SUP_GUI_EXTRA_BUILDVERSION ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH})
+set(SUP_GUI_EXTRA_TESTOUTPUT_DIR ${CMAKE_BINARY_DIR}/test_output_mvvm)
+
+# -----------------------------------------------------------------------------
+# Dependencies
+# -----------------------------------------------------------------------------
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+find_package(Threads)
+
+if (SUP_MVVM_USE_QT6)
+  find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets Core Gui PrintSupport Test)
+else()
+  find_package(QT NAMES Qt5 REQUIRED COMPONENTS Widgets Core Gui PrintSupport Test)
+endif()
+
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Core Gui PrintSupport Test)
+message(STATUS "Qt${QT_VERSION_MAJOR}.${QT_VERSION_MINOR}.${QT_VERSION_PATCH} found")
+message(STATUS " Includes: ${Qt${QT_VERSION_MAJOR}Widgets_INCLUDE_DIRS}")
+get_target_property(QtWidgets_location Qt${QT_VERSION_MAJOR}::Core LOCATION_Release)
+message(STATUS " Core library: ${QtWidgets_location}")
