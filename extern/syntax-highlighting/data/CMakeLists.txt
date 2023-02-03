@@ -1,5 +1,4 @@
 # create a directory for generated definitions
-
 execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/generated/syntax)
 
 macro(generate_syntax_definition generator targetFile srcFile)
@@ -20,20 +19,20 @@ macro(generate_syntax_definition generator targetFile srcFile)
     set(gen_defs ${gen_defs} ${CMAKE_CURRENT_BINARY_DIR}/generated/syntax/${targetFile})
 endmacro()
 
-## generate PHP definitions
-#macro(generate_php_syntax_definition targetFile srcFile)
-#    generate_syntax_definition(generate-php.pl ${targetFile} ${srcFile} ${CMAKE_CURRENT_SOURCE_DIR}/syntax/php.xml)
-#endmacro()
+# generate PHP definitions
+macro(generate_php_syntax_definition targetFile srcFile)
+    generate_syntax_definition(generate-php.pl ${targetFile} ${srcFile} ${CMAKE_CURRENT_SOURCE_DIR}/syntax/php.xml)
+endmacro()
 
-#generate_php_syntax_definition(javascript-php.xml javascript.xml)
-#generate_php_syntax_definition(css-php.xml css.xml)
-#generate_php_syntax_definition(html-php.xml html.xml)
-#generate_php_syntax_definition(javascript-react-php.xml javascript-react.xml)
-#generate_php_syntax_definition(typescript-php.xml typescript.xml)
-#generate_php_syntax_definition(mustache-php.xml mustache.xml)
+generate_php_syntax_definition(javascript-php.xml javascript.xml)
+generate_php_syntax_definition(css-php.xml css.xml)
+generate_php_syntax_definition(html-php.xml html.xml)
+generate_php_syntax_definition(javascript-react-php.xml javascript-react.xml)
+generate_php_syntax_definition(typescript-php.xml typescript.xml)
+generate_php_syntax_definition(mustache-php.xml mustache.xml)
 
-## generate DoxygenLua definition
-#generate_syntax_definition(generate-doxygenlua.pl doxygenlua.xml doxygen.xml)
+# generate DoxygenLua definition
+generate_syntax_definition(generate-doxygenlua.pl doxygenlua.xml doxygen.xml)
 
 # find all definitions
 file(GLOB src_defs "${CMAKE_CURRENT_SOURCE_DIR}/syntax/*.xml")
@@ -55,7 +54,7 @@ endforeach()
 set(SYNTAX_DATA_QRC_FILES_STRING ${qrc_body})
 configure_file(syntax-data.qrc.in ${qrc_file} @ONLY)
 
-## generate the index file
+# generate the index file
 add_custom_target(katesyntax DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/index.katesyntax")
 add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/index.katesyntax"
     COMMAND katehighlightingindexer "${CMAKE_CURRENT_BINARY_DIR}/index.katesyntax" "${CMAKE_CURRENT_SOURCE_DIR}/schema/language.xsd" "${CMAKE_CURRENT_BINARY_DIR}/syntax-data.qrc"
@@ -78,9 +77,9 @@ else()
     install (FILES "${CMAKE_CURRENT_BINARY_DIR}/index.katesyntax" ${defs} DESTINATION ${KDE_INSTALL_DATADIR}/org.kde.syntax-highlighting/syntax-bundled)
 endif()
 
-## set PIC to allow use in static and shared libs
-## this needs some more recent CMake than generally required
-#set_property(TARGET SyntaxHighlightingData PROPERTY POSITION_INDEPENDENT_CODE 1)
-#if(NOT ${CMAKE_VERSION} VERSION_LESS "3.13.0")
-#    target_link_libraries(SyntaxHighlightingData PRIVATE Qt${QT_MAJOR_VERSION}::Core)
-#endif()
+# set PIC to allow use in static and shared libs
+# this needs some more recent CMake than generally required
+set_property(TARGET SyntaxHighlightingData PROPERTY POSITION_INDEPENDENT_CODE 1)
+if(NOT ${CMAKE_VERSION} VERSION_LESS "3.13.0")
+    target_link_libraries(SyntaxHighlightingData PRIVATE Qt${QT_MAJOR_VERSION}::Core)
+endif()

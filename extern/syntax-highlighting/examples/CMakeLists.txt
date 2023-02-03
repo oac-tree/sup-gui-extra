@@ -1,3 +1,3 @@
-
-add_executable(minimal main.cpp)
-target_link_libraries(minimal Qt${QT_MAJOR_VERSION}::Widgets KF5SyntaxHighlighting)
+ecm_optional_add_subdirectory(codeeditor)
+ecm_optional_add_subdirectory(codepdfprinter)
+ecm_optional_add_subdirectory(minimaltest)
