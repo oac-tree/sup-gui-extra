@@ -1,24 +1,24 @@
 # create a directory for generated definitions
 
-#execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/generated/syntax)
+execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/generated/syntax)
 
-#macro(generate_syntax_definition generator targetFile srcFile)
-#    add_custom_target(
-#        ${targetFile} ALL
-#        DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/generated/syntax/${targetFile}
-#    )
-#    add_custom_command(
-#        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/generated/syntax/${targetFile}
-#        COMMAND ${PERL_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/generators/${generator}
-#                ${CMAKE_CURRENT_SOURCE_DIR}/syntax/${srcFile}
-#                ${CMAKE_CURRENT_BINARY_DIR}/generated/syntax/${targetFile}
-#        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/generators/${generator}
-#                ${CMAKE_CURRENT_SOURCE_DIR}/syntax/${srcFile}
-#                ${ARGN}
-#        VERBATIM
-#    )
-#    set(gen_defs ${gen_defs} ${CMAKE_CURRENT_BINARY_DIR}/generated/syntax/${targetFile})
-#endmacro()
+macro(generate_syntax_definition generator targetFile srcFile)
+    add_custom_target(
+        ${targetFile} ALL
+        DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/generated/syntax/${targetFile}
+    )
+    add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/generated/syntax/${targetFile}
+        COMMAND ${PERL_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/generators/${generator}
+                ${CMAKE_CURRENT_SOURCE_DIR}/syntax/${srcFile}
+                ${CMAKE_CURRENT_BINARY_DIR}/generated/syntax/${targetFile}
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/generators/${generator}
+                ${CMAKE_CURRENT_SOURCE_DIR}/syntax/${srcFile}
+                ${ARGN}
+        VERBATIM
+    )
+    set(gen_defs ${gen_defs} ${CMAKE_CURRENT_BINARY_DIR}/generated/syntax/${targetFile})
+endmacro()
 
 ## generate PHP definitions
 #macro(generate_php_syntax_definition targetFile srcFile)
@@ -56,27 +56,27 @@ set(SYNTAX_DATA_QRC_FILES_STRING ${qrc_body})
 configure_file(syntax-data.qrc.in ${qrc_file} @ONLY)
 
 ## generate the index file
-#add_custom_target(katesyntax DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/index.katesyntax")
-#add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/index.katesyntax"
-#    COMMAND katehighlightingindexer "${CMAKE_CURRENT_BINARY_DIR}/index.katesyntax" "${CMAKE_CURRENT_SOURCE_DIR}/schema/language.xsd" "${CMAKE_CURRENT_BINARY_DIR}/syntax-data.qrc"
-#    DEPENDS katehighlightingindexer ${defs} ${CMAKE_CURRENT_SOURCE_DIR}/schema/language.xsd ${CMAKE_CURRENT_BINARY_DIR}/syntax-data.qrc
-#)
+add_custom_target(katesyntax DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/index.katesyntax")
+add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/index.katesyntax"
+    COMMAND katehighlightingindexer "${CMAKE_CURRENT_BINARY_DIR}/index.katesyntax" "${CMAKE_CURRENT_SOURCE_DIR}/schema/language.xsd" "${CMAKE_CURRENT_BINARY_DIR}/syntax-data.qrc"
+    DEPENDS katehighlightingindexer ${defs} ${CMAKE_CURRENT_SOURCE_DIR}/schema/language.xsd ${CMAKE_CURRENT_BINARY_DIR}/syntax-data.qrc
+)
 
-## do we want syntax files bundled in the library?
-#if (QRC_SYNTAX)
-#    # generate the qrc file manually, to make dependencies on generated files work...
-#    add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/qrc_syntax-data.cpp"
-#        COMMAND Qt${QT_MAJOR_VERSION}::rcc --name syntax_data -o "${CMAKE_CURRENT_BINARY_DIR}/qrc_syntax-data.cpp" "${CMAKE_CURRENT_BINARY_DIR}/syntax-data.qrc"
-#        DEPENDS ${defs} ${CMAKE_CURRENT_BINARY_DIR}/index.katesyntax
-#    )
-#    set_source_files_properties("${CMAKE_CURRENT_BINARY_DIR}/qrc_syntax-data.cpp" PROPERTIES SKIP_AUTOMOC ON)
+# do we want syntax files bundled in the library?
+if (QRC_SYNTAX)
+    # generate the qrc file manually, to make dependencies on generated files work...
+    add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/qrc_syntax-data.cpp"
+        COMMAND Qt${QT_MAJOR_VERSION}::rcc --name syntax_data -o "${CMAKE_CURRENT_BINARY_DIR}/qrc_syntax-data.cpp" "${CMAKE_CURRENT_BINARY_DIR}/syntax-data.qrc"
+        DEPENDS ${defs} ${CMAKE_CURRENT_BINARY_DIR}/index.katesyntax
+    )
+    set_source_files_properties("${CMAKE_CURRENT_BINARY_DIR}/qrc_syntax-data.cpp" PROPERTIES SKIP_AUTOMOC ON)
 
-#    target_sources(SyntaxHighlightingData PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/qrc_syntax-data.cpp)
-#else()
-#    add_dependencies(SyntaxHighlightingData katesyntax)
-#    # install the syntax files as normal files into the prefix
-#    install (FILES "${CMAKE_CURRENT_BINARY_DIR}/index.katesyntax" ${defs} DESTINATION ${KDE_INSTALL_DATADIR}/org.kde.syntax-highlighting/syntax-bundled)
-#endif()
+    target_sources(SyntaxHighlightingData PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/qrc_syntax-data.cpp)
+else()
+    add_dependencies(SyntaxHighlightingData katesyntax)
+    # install the syntax files as normal files into the prefix
+    install (FILES "${CMAKE_CURRENT_BINARY_DIR}/index.katesyntax" ${defs} DESTINATION ${KDE_INSTALL_DATADIR}/org.kde.syntax-highlighting/syntax-bundled)
+endif()
 
 ## set PIC to allow use in static and shared libs
 ## this needs some more recent CMake than generally required
