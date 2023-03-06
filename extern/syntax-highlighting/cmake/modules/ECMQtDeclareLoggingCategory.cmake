@@ -138,11 +138,11 @@ Example usage:
       EXPORT MyProject
   )
 
-  ecm_qt_install_logging_categories(
-      EXPORT MyProject
-      FILE myproject.categories
-      DESTINATION "${KDE_INSTALL_LOGGINGCATEGORIESDIR}"
-  )
+  # ecm_qt_install_logging_categories(
+      # EXPORT MyProject
+      # FILE myproject.categories
+      # DESTINATION "${KDE_INSTALL_LOGGINGCATEGORIESDIR}"
+  # )
 
 Since 5.68.0.
 #]=======================================================================]

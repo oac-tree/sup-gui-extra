@@ -20,19 +20,19 @@ macro(generate_syntax_definition generator targetFile srcFile)
 endmacro()
 
 # generate PHP definitions
-macro(generate_php_syntax_definition targetFile srcFile)
-    generate_syntax_definition(generate-php.pl ${targetFile} ${srcFile} ${CMAKE_CURRENT_SOURCE_DIR}/syntax/php.xml)
-endmacro()
+# macro(generate_php_syntax_definition targetFile srcFile)
+    # generate_syntax_definition(generate-php.pl ${targetFile} ${srcFile} ${CMAKE_CURRENT_SOURCE_DIR}/syntax/php.xml)
+# endmacro()
 
-generate_php_syntax_definition(javascript-php.xml javascript.xml)
-generate_php_syntax_definition(css-php.xml css.xml)
-generate_php_syntax_definition(html-php.xml html.xml)
-generate_php_syntax_definition(javascript-react-php.xml javascript-react.xml)
-generate_php_syntax_definition(typescript-php.xml typescript.xml)
-generate_php_syntax_definition(mustache-php.xml mustache.xml)
+# generate_php_syntax_definition(javascript-php.xml javascript.xml)
+# generate_php_syntax_definition(css-php.xml css.xml)
+# generate_php_syntax_definition(html-php.xml html.xml)
+# generate_php_syntax_definition(javascript-react-php.xml javascript-react.xml)
+# generate_php_syntax_definition(typescript-php.xml typescript.xml)
+# generate_php_syntax_definition(mustache-php.xml mustache.xml)
 
 # generate DoxygenLua definition
-generate_syntax_definition(generate-doxygenlua.pl doxygenlua.xml doxygen.xml)
+# generate_syntax_definition(generate-doxygenlua.pl doxygenlua.xml doxygen.xml)
 
 # find all definitions
 file(GLOB src_defs "${CMAKE_CURRENT_SOURCE_DIR}/syntax/*.xml")

@@ -7,31 +7,53 @@ project(KSyntaxHighlighting VERSION ${KF_VERSION})
 #set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
 set(ECM_MODULE_DIR ${CMAKE_CURRENT_LIST_DIR}/cmake/modules)
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake/modules;${CMAKE_CURRENT_LIST_DIR}/cmake/kde-modules)
+# set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake/modules;${CMAKE_CURRENT_LIST_DIR}/cmake/kde-modules)
 
 if(POLICY CMP0063)
     cmake_policy(SET CMP0063 NEW)
 endif()
 
-include(KDEInstallDirs)
+# include(${CMAKE_CURRENT_LIST_DIR}/cmake/modules/QtVersionOption.cmake)
+# if (QT_MAJOR_VERSION EQUAL "6")
+    # find_package(Qt6Core)
+    # set(ENABLE_BSYMBOLICFUNCTIONS ${QT_FEATURE_reduce_relocations})
+# else ()
+    # set(ENABLE_BSYMBOLICFUNCTIONS ON)
+# endif()
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/modules/QtVersionOption.cmake)
+add_definitions(-DQT_NO_CAST_TO_ASCII
+                -DQT_NO_CAST_FROM_ASCII
+                -DQT_NO_URL_CAST_FROM_STRING
+                -DQT_NO_CAST_FROM_BYTEARRAY
+                -DQT_USE_QSTRINGBUILDER
+                -DQT_NO_NARROWING_CONVERSIONS_IN_CONNECT
+               )
+
+#include(KDEInstallDirs)
 #include(KDECMakeSettings)
-include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
+#include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 #include(KDEGitCommitHooks)
 
 include(FeatureSummary)
 include(GenerateExportHeader)
-include(ECMSetupVersion)
-include(ECMGenerateHeaders)
+#include(ECMSetupVersion)
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/modules/ECMSetupVersion.cmake)
+#include(ECMGenerateHeaders)
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/modules/ECMGenerateHeaders.cmake)
 #include(ECMGeneratePriFile)
 include(CMakePackageConfigHelpers)
 #include(ECMPoQmTools)
-include(ECMQtDeclareLoggingCategory)
-include(ECMMarkNonGuiExecutable)
+#include(ECMQtDeclareLoggingCategory)
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/modules/ECMQtDeclareLoggingCategory.cmake)
+#include(ECMMarkNonGuiExecutable)
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/modules/ECMMarkNonGuiExecutable.cmake)
 #include(ECMAddQch)
 #include(ECMOptionalAddSubdirectory)
-include(ECMGenerateExportHeader)
+#include(ECMGenerateExportHeader)
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/modules/ECMGenerateExportHeader.cmake)
 #include(ECMDeprecationSettings)
-include(ECMQmlModule)
+#include(ECMQmlModule)
+#include(${CMAKE_CURRENT_LIST_DIR}/cmake/modules/ECMQmlModule.cmake)
 
 ecm_setup_version(PROJECT
     VARIABLE_PREFIX SyntaxHighlighting
