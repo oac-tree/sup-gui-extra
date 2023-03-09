@@ -25,10 +25,10 @@ set(CMAKE_AUTORCC ON)
 
 find_package(Threads)
 
-if (SUP_MVVM_USE_QT6)
-  find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets Core Gui PrintSupport Test)
+if (COA_USE_QT6)
+  find_package(QT NAMES Qt6 REQUIRED)
 else()
-  find_package(QT NAMES Qt5 REQUIRED COMPONENTS Widgets Core Gui PrintSupport Test)
+  find_package(QT NAMES Qt5 REQUIRED)
 endif()
 
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Core Gui PrintSupport Test)
