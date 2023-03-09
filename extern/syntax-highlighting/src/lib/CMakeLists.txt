@@ -1,8 +1,14 @@
-add_library(KF5SyntaxHighlighting)
+add_library(ksyntaxhighlighting)
+add_library(sup-gui-extra::ksyntaxhighlighting ALIAS ksyntaxhighlighting)
 
 #ecm_create_qm_loader(syntax_highlighting_QM_LOADER syntaxhighlighting5_qt)
 
-target_sources(KF5SyntaxHighlighting PRIVATE
+ecm_setup_version(${KF_VERSION}
+    VARIABLE_PREFIX SyntaxHighlighting
+    VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/ksyntaxhighlighting_version.h"
+)
+
+target_sources(ksyntaxhighlighting PRIVATE
     abstracthighlighter.cpp
     context.cpp
     contextswitch.cpp
@@ -22,10 +28,10 @@ target_sources(KF5SyntaxHighlighting PRIVATE
     wildcardmatcher.cpp
     themedata.cpp
     worddelimiters.cpp
-    ${syntax_highlighting_QM_LOADER}
+    # ${syntax_highlighting_QM_LOADER}
     $<TARGET_OBJECTS:SyntaxHighlightingData>
 )
-ecm_qt_declare_logging_category(KF5SyntaxHighlighting
+ecm_qt_declare_logging_category(ksyntaxhighlighting
     HEADER ksyntaxhighlighting_logging.h
     IDENTIFIER KSyntaxHighlighting::Log
     CATEGORY_NAME kf.syntaxhighlighting
@@ -34,7 +40,7 @@ ecm_qt_declare_logging_category(KF5SyntaxHighlighting
     EXPORT KSYNTAXHIGHLIGHTING
 )
 
-ecm_generate_export_header(KF5SyntaxHighlighting
+ecm_generate_export_header(ksyntaxhighlighting
     BASE_NAME KSyntaxHighlighting
     GROUP_BASE_NAME KF
     VERSION ${KF_VERSION}
@@ -42,13 +48,13 @@ ecm_generate_export_header(KF5SyntaxHighlighting
     DEPRECATION_VERSIONS 5.87
     EXCLUDE_DEPRECATED_BEFORE_AND_AT ${EXCLUDE_DEPRECATED_BEFORE_AND_AT}
 )
-set_target_properties(KF5SyntaxHighlighting PROPERTIES
+set_target_properties(ksyntaxhighlighting PROPERTIES
     VERSION ${SyntaxHighlighting_VERSION}
     SOVERSION ${SyntaxHighlighting_SOVERSION}
-    EXPORT_NAME SyntaxHighlighting
+    EXPORT_NAME ksyntaxhighlighting
 )
 
-target_link_libraries(KF5SyntaxHighlighting
+target_link_libraries(ksyntaxhighlighting
     PUBLIC
         Qt${QT_MAJOR_VERSION}::Gui
     PRIVATE
@@ -71,24 +77,23 @@ set(Forwarding_Header_Names
 ecm_generate_headers(CamelCase_HEADERS
     HEADER_NAMES ${Forwarding_Header_Names}
     REQUIRED_HEADERS SyntaxHighlighting_HEADERS
-    OUTPUT_DIR ${CMAKE_BINARY_DIR}/KSyntaxHighlighting/KSyntaxHighlighting
+    OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/ksyntaxhighlighting
 )
 
-target_include_directories(KF5SyntaxHighlighting
-    INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KSyntaxHighlighting>"
+target_include_directories(ksyntaxhighlighting
+    INTERFACE "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/sup/gui-extra/ksyntaxhighlighting>"
     PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/KSyntaxHighlighting>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
 )
 
-install(TARGETS KF5SyntaxHighlighting EXPORT KF5SyntaxHighlightingTargets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS ksyntaxhighlighting EXPORT sup-gui-extra-targets DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 install(FILES
     ${CamelCase_HEADERS}
     ${SyntaxHighlighting_HEADERS}
     ${CMAKE_CURRENT_BINARY_DIR}/ksyntaxhighlighting_export.h
-    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KSyntaxHighlighting/KSyntaxHighlighting
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/sup/gui-extra/ksyntaxhighlighting
 )
 
 #if(BUILD_QCH)

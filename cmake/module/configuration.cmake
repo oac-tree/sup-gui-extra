@@ -31,7 +31,7 @@ else()
   find_package(QT NAMES Qt5 REQUIRED)
 endif()
 
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Core Gui PrintSupport Test)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network Widgets Core Gui PrintSupport Test)
 message(STATUS "Qt${QT_VERSION_MAJOR}.${QT_VERSION_MINOR}.${QT_VERSION_PATCH} found")
 message(STATUS " Includes: ${Qt${QT_VERSION_MAJOR}Widgets_INCLUDE_DIRS}")
 get_target_property(QtWidgets_location Qt${QT_VERSION_MAJOR}::Core LOCATION_Release)
