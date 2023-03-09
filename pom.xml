@@ -1,0 +1,166 @@
+<!--
+ $HeadURL: $
+ $Id: $
+
+ Project       : SUP GUI extra module
+
+ Description   : Collection of C++/Qt extra components for Operational Application User Interfaces.
+
+ Authors       : CODAC Operation Applications Team
+
+ Copyright (c) : 2010-2023 ITER Organization,
+                 CS 90 046
+                 13067 St. Paul-lez-Durance Cedex
+                 France
+
+ This file is part of ITER CODAC software.
+ For the terms and conditions of redistribution or use of this software
+ refer to the file ITER-LICENSE.TXT located in the top level directory
+ of the distribution package.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.iter.codac.units</groupId>
+    <artifactId>sup-gui-extra</artifactId>
+    <packaging>codac</packaging>
+    <!-- See ChangeLog file for details -->
+    <version>0.4.99</version>
+    <name>SUP GUI extra module</name>
+    <description>Collection of C++/Qt extra components for Operational Application User Interfaces.</description>
+    <url>http://www.iter.org/</url>
+
+    <!-- Project properties -->
+    <properties>
+        <unit.type>module</unit.type>
+        <integrity.level>1</integrity.level>
+        <!-- -->
+        <cppcheck.args>--enable=all --suppress=missingInclude --inline-suppr</cppcheck.args>
+        <sonar.sources.cpp>src</sonar.sources.cpp>
+        <sonar.tests.cpp>test</sonar.tests.cpp>
+        <sonar.exclusions>test/**</sonar.exclusions>
+        <coverage>false</coverage>
+    </properties>
+
+    <!-- Parent pom.xml -->
+    <parent>
+        <groupId>org.iter.codac.units</groupId>
+        <artifactId>maven-iter-settings</artifactId>
+        <version>7.1.0</version>
+    </parent>
+
+    <!-- Unit owner and developers -->
+    <developers>
+        <developer>
+            <id>pospelg</id>
+            <name>Gennady Pospelov</name>
+            <organization>ITER Organisation</organization>
+            <email>gennady.pospelov@iter.org</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>gracasr</id>
+            <name>Rafael Silva</name>
+            <organization>CSW</organization>
+            <email>rg-silva@criticalsoftware.com</email>
+            <roles>
+                <role>unit owner</role>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <!-- Configure how the project is built -->
+    <build>
+        <!-- Default phase is compile -->
+        <!-- This command is executed if you just write 'mvn' -->
+        <defaultGoal>compile</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-iter-plugin</artifactId>
+                <configuration>
+                    <!-- Copy the sources over to target -->
+                    <init>
+                        <copy source="extern" target="main/extern" />
+                        <copy source="cmake" target="main/cmake" />
+                        <copy source="CMakeLists.txt" target="main/CMakeLists.txt" />
+                    </init>
+                    <!-- Configure packaging and dependencies -->
+                    <packaging>
+                        <package>
+                            <!-- CMAKE config -->
+                            <include type="file" source="lib/cmake/sup-gui-extra" target="lib/cmake/sup-gui-extra">
+                                <include>*.cmake</include>
+                            </include>
+                            <!-- Libraries -->
+                            <include type="file" source="lib" target="lib">
+                                <include>*.a</include>
+                            </include>
+                            <!-- Public API headers -->
+                            <include type="file" source="include/sup/gui-extra" target="include/sup/gui-extra" />
+                            <!-- Package dependencies -->
+                            <requires version="current">qt5-qtbase-gui</requires>
+                            <requires version="current">qt5-qtbase</requires>
+                            <requires version="current">qt5-qttools</requires>
+                            <requires version="current" buildOnly="true">qt5-qtbase-devel</requires>
+                            <requires version="current" buildOnly="true">qt5-qttools-devel</requires>
+                            <requires version="current" buildOnly="true">cmake</requires>
+                        </package>
+                    </packaging>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <!-- Configure cmake build -->
+                    <execution>
+                        <id>configure-build</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>cmake</executable>
+                            <workingDirectory>${project.build.directory}</workingDirectory>
+                            <arguments>
+                                <!-- CMAKE configuration options -->
+                                <argument>-B${project.build.directory}/main/build</argument>
+                                <argument>-DCMAKE_INSTALL_PREFIX=${project.build.directory}</argument>
+                                <argument>-DCMAKE_INSTALL_LIBDIR=lib</argument>
+                                <argument>-DCMAKE_INSTALL_DOCDIR=doc/${project.artifactId}</argument>
+                                <argument>-DTEST_OUTPUT_DIRECTORY=${project.build.directory}/test</argument>
+                                <argument>-DCOVERAGE=${coverage}</argument>
+                                <argument>${project.build.directory}/main</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <!-- Compile project -->
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>cmake</executable>
+                            <workingDirectory>${project.build.directory}</workingDirectory>
+                            <arguments>
+                                <argument>--build</argument>
+                                <argument>${project.build.directory}/main/build</argument>
+                                <argument>-j4</argument>
+                                <argument>--target</argument>
+                                <argument>install</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
