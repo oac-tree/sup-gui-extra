@@ -81,7 +81,7 @@ ecm_generate_headers(CamelCase_HEADERS
 )
 
 target_include_directories(ksyntaxhighlighting
-    INTERFACE "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/sup/gui-extra/ksyntaxhighlighting>"
+    INTERFACE "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/sup/gui-extra>"
     PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
