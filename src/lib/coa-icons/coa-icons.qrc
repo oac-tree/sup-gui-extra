@@ -1,4 +1,5 @@
 <RCC>
     <qresource prefix="/">
+        <file>icons/iter_logo.png</file>
     </qresource>
 </RCC>
