@@ -1,0 +1,36 @@
+/******************************************************************************
+ *
+ * Project       : Graphical User Interface for SUP and PSPS
+ *
+ * Description   : Common libraries and tools for Operation Application GUIs
+ *
+ * Author        : Rafael Siva (EXT)
+ *
+ * Copyright (c) : 2010-2023 ITER Organization,
+ *                 CS 90 046
+ *                 13067 St. Paul-lez-Durance Cedex
+ *                 France
+ *
+ * This file is part of ITER CODAC software.
+ * For the terms and conditions of redistribution or use of this software
+ * refer to the file ITER-LICENSE.TXT located in the top level directory
+ * of the distribution package.
+ *****************************************************************************/
+
+#ifndef COA_ICONS_COA_ICONS_H_
+#define COA_ICONS_COA_ICONS_H_
+
+namespace sup::gui
+{
+    inline const char* GetCOAIconsResourcePath()
+    {
+        return "@COA_ICONS_RCC@";
+    }
+
+    inline const char* GetCOAIconsThemeName()
+    {
+        return "@COA_ICONS_THEME_NAME@";
+    }
+} // namespace sup::gui
+
+#endif // COA_ICONS_COA_ICONS_H_

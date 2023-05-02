@@ -15,7 +15,7 @@ install(EXPORT sup-gui-extra-targets FILE sup-gui-extra-targets.cmake NAMESPACE 
 
 # Add all targets to the build-tree export set
 if(SUP_GUI_EXTRA_BUILD_HIGHLIGHT)
-  export(TARGETS ksyntaxhighlighting NAMESPACE sup-gui-extra:: FILE "${PROJECT_BINARY_DIR}/sup-gui-extra-targets.cmake")
+  export(TARGETS ksyntaxhighlighting coa-icons NAMESPACE sup-gui-extra:: FILE "${PROJECT_BINARY_DIR}/sup-gui-extra-targets.cmake")
 endif()
 
 # Export the package for use from the build-tree (goes to $HOME/.cmake)

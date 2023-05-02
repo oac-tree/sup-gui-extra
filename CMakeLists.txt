@@ -12,6 +12,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake/module)
 set(CMAKE_CONFIG_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake/config)
 include(configuration)
 
+add_subdirectory(src)
 add_subdirectory(extern)
 
 include(installation)

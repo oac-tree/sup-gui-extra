@@ -99,6 +99,7 @@
                             <!-- Libraries -->
                             <include type="file" source="lib" target="lib">
                                 <include>*.a</include>
+                                <include>*.rcc</include>
                             </include>
                             <!-- Public API headers -->
                             <include type="file" source="include/sup/gui-extra" target="include/sup/gui-extra" />
@@ -131,7 +132,7 @@
                             <arguments>
                                 <!-- CMAKE configuration options -->
                                 <argument>-B${project.build.directory}/main/build</argument>
-                                <argument>-DCMAKE_INSTALL_PREFIX=${project.build.directory}</argument>
+                                <argument>-DCMAKE_INSTALL_PREFIX=%{codac_root}</argument>
                                 <argument>-DCMAKE_INSTALL_LIBDIR=lib</argument>
                                 <argument>-DCMAKE_INSTALL_DOCDIR=doc/${project.artifactId}</argument>
                                 <argument>-DTEST_OUTPUT_DIRECTORY=${project.build.directory}/test</argument>
@@ -148,6 +149,9 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
+                            <environmentVariables>
+                                <DESTDIR>${project.build.directory}</DESTDIR>
+                            </environmentVariables>
                             <executable>cmake</executable>
                             <workingDirectory>${project.build.directory}</workingDirectory>
                             <arguments>
