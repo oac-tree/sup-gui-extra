@@ -136,7 +136,7 @@
                             <arguments>
                                 <!-- CMAKE configuration options -->
                                 <argument>-B${project.build.directory}/main/build</argument>
-                                <argument>-DCMAKE_INSTALL_PREFIX=%{codac_root}</argument>
+                                <argument>-DCMAKE_INSTALL_PREFIX=${env.CODAC_ROOT}</argument>
                                 <argument>-DCMAKE_INSTALL_LIBDIR=lib</argument>
                                 <argument>-DCMAKE_INSTALL_DOCDIR=doc/${project.artifactId}</argument>
                                 <argument>-DTEST_OUTPUT_DIRECTORY=${project.build.directory}/test</argument>
@@ -153,17 +153,30 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <environmentVariables>
-                                <DESTDIR>${project.build.directory}</DESTDIR>
-                            </environmentVariables>
                             <executable>cmake</executable>
                             <workingDirectory>${project.build.directory}</workingDirectory>
                             <arguments>
                                 <argument>--build</argument>
                                 <argument>${project.build.directory}/main/build</argument>
                                 <argument>-j4</argument>
-                                <argument>--target</argument>
-                                <argument>install</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <!-- Stage package -->
+                    <execution>
+                        <id>stage-package</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>cmake</executable>
+                            <workingDirectory>${project.build.directory}</workingDirectory>
+                            <arguments>
+                                <argument>--install</argument>
+                                <argument>${project.build.directory}/main/build</argument>
+                                <argument>--prefix</argument>
+                                <argument>${project.build.directory}</argument>
                             </arguments>
                         </configuration>
                     </execution>
