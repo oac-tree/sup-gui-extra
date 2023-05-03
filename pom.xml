@@ -85,6 +85,7 @@
                 <configuration>
                     <!-- Copy the sources over to target -->
                     <init>
+                        <copy source="src" target="main/src" />
                         <copy source="extern" target="main/extern" />
                         <copy source="cmake" target="main/cmake" />
                         <copy source="CMakeLists.txt" target="main/CMakeLists.txt" />
@@ -99,6 +100,9 @@
                             <!-- Libraries -->
                             <include type="file" source="lib" target="lib">
                                 <include>*.a</include>
+                            </include>
+                            <!-- Resources -->
+                            <include type="file" source="lib/sup-gui-extra" target="lib/sup-gui-extra">
                                 <include>*.rcc</include>
                             </include>
                             <!-- Public API headers -->
