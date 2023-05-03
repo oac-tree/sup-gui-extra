@@ -26,9 +26,6 @@ target_include_directories(coa-icons INTERFACE
 install(TARGETS coa-icons EXPORT sup-gui-extra-targets DESTINATION ${COA_ICONS_RCC_INSTALLDIR})
 
 # For INSTALL_INTERFACE, loads rcc from CMAKE_INSTALL_PREFIX/COA_ICONS_RCC_INSTALLDIR/COA_ICONS_RCC_FILE
-# CODE directive is used to ensure CMake interprets ${CMAKE_INSTALL_PREFIX} at install time
-install(CODE
-  "set(COA_ICONS_RCC \"\${CMAKE_INSTALL_PREFIX}/${COA_ICONS_RCC_INSTALLDIR}/${COA_ICONS_RCC_FILE}\")
-  configure_file(\"${CMAKE_CURRENT_SOURCE_DIR}/coa_icons.h.in\" \"${SUP_GUI_EXTRA_AUTOGEN_DIR}/install/coa_icons.h\")"
-)
+set(COA_ICONS_RCC "${CMAKE_INSTALL_PREFIX}/${COA_ICONS_RCC_INSTALLDIR}/${COA_ICONS_RCC_FILE}")
+configure_file(coa_icons.h.in ${SUP_GUI_EXTRA_AUTOGEN_DIR}/install/coa_icons.h)
 install(FILES ${SUP_GUI_EXTRA_AUTOGEN_DIR}/install/coa_icons.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/sup/gui-extra)
