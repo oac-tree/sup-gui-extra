@@ -5,7 +5,7 @@ get_filename_component(SUP_GUI_EXTRA_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH
 
 include(CMakeFindDependencyMacro)
 
-find_dependency(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS  Network Quick Widgets Core Gui PrintSupport Test)
+find_dependency(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Quick Widgets Core Gui PrintSupport Test)
 
 find_dependency(Threads)
 

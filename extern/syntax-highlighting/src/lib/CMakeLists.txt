@@ -12,7 +12,7 @@ target_sources(ksyntaxhighlighting PRIVATE
     abstracthighlighter.cpp
     context.cpp
     contextswitch.cpp
-    definitiondownloader.cpp
+#    definitiondownloader.cpp
     highlightingdata.cpp
     foldingregion.cpp
     format.cpp
@@ -57,14 +57,14 @@ set_target_properties(ksyntaxhighlighting PROPERTIES
 target_link_libraries(ksyntaxhighlighting
     PUBLIC
         Qt${QT_MAJOR_VERSION}::Gui
-    PRIVATE
-        Qt${QT_MAJOR_VERSION}::Network
+#    PRIVATE
+#        Qt${QT_MAJOR_VERSION}::Network
 )
 
 set(Forwarding_Header_Names
     AbstractHighlighter
     Definition
-    DefinitionDownloader
+#    DefinitionDownloader
     FoldingRegion
     Format
     Repository
