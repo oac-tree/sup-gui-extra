@@ -31,6 +31,7 @@
 #include <QXmlStreamReader>
 
 #include <algorithm>
+#include <atomic>
 
 using namespace KSyntaxHighlighting;
 
@@ -317,6 +318,11 @@ bool DefinitionData::isLoaded() const
     return !contexts.empty();
 }
 
+namespace
+{
+std::atomic<uint64_t> definitionId{1};
+}
+
 bool DefinitionData::load(OnlyKeywords onlyKeywords)
 {
     if (fileName.isEmpty()) {
@@ -361,12 +367,15 @@ bool DefinitionData::load(OnlyKeywords onlyKeywords)
 
     resolveContexts();
 
+    id = definitionId.fetch_add(1, std::memory_order_relaxed);
+
     return true;
 }
 
 void DefinitionData::clear()
 {
     // keep only name and repo, so we can re-lookup to make references persist over repo reloads
+    id = 0;
     keywordLists.clear();
     contexts.clear();
     formats.clear();
@@ -605,7 +614,7 @@ void DefinitionData::loadItemData(QXmlStreamReader &reader)
             if (reader.name() == QLatin1String("itemData")) {
                 Format f;
                 auto formatData = FormatPrivate::detachAndGet(f);
-                formatData->definition = q;
+                formatData->definitionName = name;
                 formatData->load(reader);
                 formatData->id = RepositoryPrivate::get(repo)->nextFormatId();
                 formats.insert(f.name(), f);
