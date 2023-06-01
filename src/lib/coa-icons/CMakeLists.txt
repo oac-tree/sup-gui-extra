@@ -1,4 +1,4 @@
-add_library(coa-icons INTERFACE)
+add_library(coa-icons SHARED)
 add_library(sup-gui-extra::coa-icons ALIAS coa-icons)
 
 set_target_properties(coa-icons PROPERTIES EXPORT_NAME coa-icons)
