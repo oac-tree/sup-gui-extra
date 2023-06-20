@@ -55,5 +55,8 @@
         <file>icons/coa-icons/scalable/actions/speedometer.svg</file>
         <file>icons/coa-icons/scalable/actions/stop-circle-outline.svg</file>
         <file>icons/coa-icons/scalable/actions/xml.svg</file>
+        <file>icons/coa-icons/scalable/actions/shield-alert-outline.svg</file>
+        <file>icons/coa-icons/scalable/actions/shield-off-outline.svg</file>
+        <file>icons/coa-icons/scalable/actions/shield-outline.svg</file>
     </qresource>
 </RCC>
