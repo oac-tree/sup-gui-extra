@@ -1,3 +1,9 @@
+Changes for 1.1.0:
+
+- update syndax highlighter to v5.106
+- add common icons and installable resource file
+- remove dependency on Qt::Network
+
 Changes for 1.0.0:
 
 - First version
