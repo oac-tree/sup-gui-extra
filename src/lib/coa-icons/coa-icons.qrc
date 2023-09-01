@@ -52,13 +52,13 @@
         <file>icons/coa-icons/scalable/actions/plus-circle-multiple-outline.svg</file>
         <file>icons/coa-icons/scalable/actions/plus-circle-outline.svg</file>
         <file>icons/coa-icons/scalable/actions/refresh.svg</file>
+        <file>icons/coa-icons/scalable/actions/shield-alert-outline.svg</file>
         <file>icons/coa-icons/scalable/actions/shield-check-outline.svg</file>
+        <file>icons/coa-icons/scalable/actions/shield-off-outline.svg</file>
+        <file>icons/coa-icons/scalable/actions/shield-outline.svg</file>
         <file>icons/coa-icons/scalable/actions/speedometer-slow.svg</file>
         <file>icons/coa-icons/scalable/actions/speedometer.svg</file>
         <file>icons/coa-icons/scalable/actions/stop-circle-outline.svg</file>
         <file>icons/coa-icons/scalable/actions/xml.svg</file>
-        <file>icons/coa-icons/scalable/actions/shield-alert-outline.svg</file>
-        <file>icons/coa-icons/scalable/actions/shield-off-outline.svg</file>
-        <file>icons/coa-icons/scalable/actions/shield-outline.svg</file>
     </qresource>
 </RCC>
