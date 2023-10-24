@@ -60,6 +60,8 @@ target_link_libraries(ksyntaxhighlighting
 #    PRIVATE
 #        Qt${QT_MAJOR_VERSION}::Network
 )
+set_property(TARGET ksyntaxhighlighting PROPERTY POSITION_INDEPENDENT_CODE ON)
+
 
 set(Forwarding_Header_Names
     AbstractHighlighter
