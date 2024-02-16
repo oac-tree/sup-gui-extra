@@ -4,45 +4,57 @@
 # https://gitlab.kitware.com/cmake/community/-/wikis/doc/tutorials/Exporting-and-Importing-Targets
 # -----------------------------------------------------------------------------
 
+include(PackageConfig)
+include(CMakePackageConfigHelpers)
+
+set(BUILD_CONFIGDIR ${CMAKE_BINARY_DIR})
 set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/sup-gui-extra)
 
-# exporting targets to a script and installing it
-install(EXPORT sup-gui-extra-targets FILE sup-gui-extra-targets.cmake NAMESPACE sup-gui-extra:: DESTINATION ${INSTALL_CONFIGDIR})
-
 # -----------------------------------------------------------------------------
-# Exporting
+# Exporting targets
 # -----------------------------------------------------------------------------
+set(PACKAGE_TARGETS_FILENAME sup-gui-extra-targets.cmake)
+set(PACKAGE_TARGETS_FILE ${BUILD_CONFIGDIR}/${PACKAGE_TARGETS_FILENAME})
 
-# Add all targets to the build-tree export set
-if(SUP_GUI_EXTRA_BUILD_HIGHLIGHT)
-  export(TARGETS ksyntaxhighlighting coa-icons NAMESPACE sup-gui-extra:: FILE "${PROJECT_BINARY_DIR}/sup-gui-extra-targets.cmake")
-endif()
+# Install the export targets for installation usage, this does not relate to the build tree file
+install(EXPORT sup-gui-extra-targets FILE ${PACKAGE_TARGETS_FILENAME} NAMESPACE sup-gui-extra:: DESTINATION ${INSTALL_CONFIGDIR})
 
-# Export the package for use from the build-tree (goes to $HOME/.cmake)
+# Generate the export targets for the build tree usage
+export(TARGETS ksyntaxhighlighting coa-icons NAMESPACE sup-gui-extra:: FILE ${PACKAGE_TARGETS_FILE})
+
+# Export the package to CMake registry for build tree usage (goes to $HOME/.cmake)
 if(COA_EXPORT_BUILD_TREE)
   set(CMAKE_EXPORT_PACKAGE_REGISTRY ON)
   export(PACKAGE sup-gui-extra)
 endif()
 
 # -----------------------------------------------------------------------------
-# Creating and installing sup-gui-extra-config.cmake
+# Version configuration
 # -----------------------------------------------------------------------------
+set(PACKAGE_VERSION_FILE ${BUILD_CONFIGDIR}/sup-gui-extra-config-version.cmake)
 
-include(CMakePackageConfigHelpers)
+# Generate the version config file, shared in both build tree and installation usage
+write_basic_package_version_file(${PACKAGE_VERSION_FILE} COMPATIBILITY AnyNewerVersion)
 
-# to use in the build tree
-configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/../config/sup-gui-extra-config.cmake.in
-  ${CMAKE_CURRENT_BINARY_DIR}/sup-gui-extra-config.cmake
+install(FILES ${PACKAGE_VERSION_FILE} DESTINATION ${INSTALL_CONFIGDIR})
+
+# -----------------------------------------------------------------------------
+# Package configuration
+# -----------------------------------------------------------------------------
+set(PACKAGE_CONFIG_FILE ${BUILD_CONFIGDIR}/sup-gui-extra-config.cmake)
+
+if(CODAC_FOUND)
+  # Set NO_CMAKE_PATH and PATHS to CMAKE_PREFIX_PATH, so that find_package will use the system Qt first
+  # if it finds one, but still look in CMAKE_PREFIX_PATH as a last resort. This gives system Qt priority over CODAC Qt
+  set(QT_FIND_OPTIONS NO_CMAKE_PATH PATHS "\$\{CMAKE_PREFIX_PATH\}")
+endif()
+
+# Generate the package config file, shared in both build tree and installation usage
+write_package_config_file(
+  sup-gui-extra
+  OUTPUT ${PACKAGE_CONFIG_FILE}
   INSTALL_DESTINATION ${INSTALL_CONFIGDIR}
-)
+  DEPENDENCIES Qt${QT_VERSION_MAJOR}
+  Qt${QT_VERSION_MAJOR}_FIND_OPTIONS ${QT_FIND_OPTIONS} COMPONENTS ${QT_FIND_COMPONENTS})
 
-# to use in install tree
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sup-gui-extra-config.cmake DESTINATION ${INSTALL_CONFIGDIR})
-
-# -----------------------------------------------------------------------------
-# Create and install sup-gui-extra-config-version.cmake file
-# -----------------------------------------------------------------------------
-write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/sup-gui-extra-config-version.cmake VERSION
-  ${PROJECT_VERSION} COMPATIBILITY AnyNewerVersion)
-
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sup-gui-extra-config-version.cmake DESTINATION ${INSTALL_CONFIGDIR})
+install(FILES ${PACKAGE_CONFIG_FILE} DESTINATION ${INSTALL_CONFIGDIR})
