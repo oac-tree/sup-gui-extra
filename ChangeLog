@@ -1,7 +1,11 @@
-Changes for 1.3.0:
+Changes for 1.4.0:
 
 - COA Release v2.1, March 2024
 - Less verbose CMake find package machinery
+
+Changes for 1.3.0:
+
+- Special TMCR bugfix Release, November 2023
 - Fix to find system's qt5 on CODAC
 
 Changes for 1.2.0:
