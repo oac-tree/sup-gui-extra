@@ -26,7 +26,7 @@
     <artifactId>sup-gui-extra</artifactId>
     <packaging>codac</packaging>
     <!-- See ChangeLog file for details -->
-    <version>1.4.0</version>
+    <version>1.5.0</version>
     <name>SUP GUI extra module</name>
     <description>Collection of C++/Qt extra components for Operational Application User Interfaces.</description>
     <url>http://www.iter.org/</url>
