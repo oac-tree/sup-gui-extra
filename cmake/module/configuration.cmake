@@ -8,7 +8,7 @@ include(GNUInstallDirs)
 include(FindPackageMessage)
 
 # -----------------------------------------------------------------------------
-# CODAC enviorenment
+# CODAC environment
 # -----------------------------------------------------------------------------
 if(NOT COA_NO_CODAC)
   find_package(CODAC MODULE QUIET)
