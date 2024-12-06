@@ -618,7 +618,13 @@ static MatchResult regexMatch(const QRegularExpression &regexp, QStringView text
     /**
      * match the pattern
      */
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     const auto result = regexp.match(text, offset, QRegularExpression::NormalMatch, QRegularExpression::DontCheckSubjectStringMatchOption);
+#else
+    const auto result = regexp.matchView(text, offset, QRegularExpression::NormalMatch, QRegularExpression::DontCheckSubjectStringMatchOption);
+#endif
+
     if (result.capturedStart() == offset) {
         /**
          * we only need to compute the captured texts if we have real capture groups
