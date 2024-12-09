@@ -139,6 +139,7 @@
                                 <argument>-DCMAKE_INSTALL_PREFIX=${env.CODAC_ROOT}</argument>
                                 <argument>-DCMAKE_INSTALL_LIBDIR=lib</argument>
                                 <argument>-DCMAKE_INSTALL_DOCDIR=doc/${project.artifactId}</argument>
+                                <argument>-DCOA_USE_QT6=OFF</argument>
                                 <argument>${project.build.directory}/main</argument>
                             </arguments>
                         </configuration>
