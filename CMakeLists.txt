@@ -15,7 +15,7 @@
 # of the distribution package.
 
 cmake_minimum_required(VERSION 3.13...3.31)
-project(sup-gui-extra-all VERSION 1.6.0 LANGUAGES CXX)
+project(sup-gui-extra-all VERSION 1.7.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 
 option(COA_EXPORT_BUILD_TREE "Export build tree in /home/user/.cmake registry" OFF)
