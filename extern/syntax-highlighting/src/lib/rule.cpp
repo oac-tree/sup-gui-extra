@@ -619,7 +619,7 @@ static MatchResult regexMatch(const QRegularExpression &regexp, QStringView text
      * match the pattern
      */
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION < QT_VERSION_CHECK(6, 5, 0)
     const auto result = regexp.match(text, offset, QRegularExpression::NormalMatch, QRegularExpression::DontCheckSubjectStringMatchOption);
 #else
     const auto result = regexp.matchView(text, offset, QRegularExpression::NormalMatch, QRegularExpression::DontCheckSubjectStringMatchOption);
