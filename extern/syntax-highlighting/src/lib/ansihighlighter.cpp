@@ -1225,7 +1225,7 @@ void AnsiHighlighter::setOutputFile(const QString &fileName)
 
 void AnsiHighlighter::setOutputFile(FILE *fileHandle)
 {
-    d->file.open(fileHandle, QIODevice::WriteOnly);
+    (void)d->file.open(fileHandle, QIODevice::WriteOnly);
     d->out.setDevice(&d->file);
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     d->out.setCodec("UTF-8");
