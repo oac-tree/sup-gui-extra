@@ -27,7 +27,7 @@
     <artifactId>sup-gui-extra</artifactId>
     <packaging>codac</packaging>
     <!-- See ChangeLog file for details -->
-    <version>2.3.0</version>
+    <version>2.4.0</version>
     <name>SUP GUI extra module</name>
     <description>Collection of C++/Qt extra components for Operational Application User Interfaces.</description>
     <url>http://www.iter.org/</url>
@@ -61,15 +61,6 @@
             <roles>
               <role>unit owner</role>
               <role>developer</role>
-            </roles>
-        </developer>
-        <developer>
-            <id>gracasr</id>
-            <name>Rafael Silva</name>
-            <organization>CSW</organization>
-            <email>rg-silva@criticalsoftware.com</email>
-            <roles>
-                <role>developer</role>
             </roles>
         </developer>
     </developers>
